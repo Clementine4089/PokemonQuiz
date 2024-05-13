@@ -64,8 +64,8 @@ function checkAnswer(selectedIndex) {
   questionCount++;
   updateProgress();
   updateScore();
-  nextQuestion();
   nextButton.disabled = false;
+  nextQuestion();
 }
 
 function updateProgress() {
