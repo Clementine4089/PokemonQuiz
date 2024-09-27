@@ -11,6 +11,8 @@ const optionsElement = document.getElementById("options");
 const nextButton = document.getElementById("next-btn");
 const resultElement = document.getElementById("result");
 const progressElement = document.getElementById("progress");
+const increectElement = document.getElementById("incorrect");
+const background = document.getElementById("background");
 
 async function getRandomPokemon() {
   let randomId;
@@ -34,11 +36,11 @@ function displayPokemon(pokemon) {
 
 async function displayOptions(pokemon) {
     const options = [];
-    correctAnswer = Math.floor(Math.random() * 16); // Randomly assign the correct answer position
+    correctAnswer = Math.floor(Math.random() * 4); // Randomly assign the correct answer position
     options[correctAnswer] = pokemon.name;
   
     // Fetch real Pokemon names for additional options
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 4; i++) {
       if (i !== correctAnswer) {
         options[i] = await getRandomPokemonName();
       }
@@ -58,19 +60,22 @@ function checkAnswer(selectedIndex) {
   if (selectedIndex === correctAnswer) {
     score++;
     resultElement.textContent = "Correct!";
+    background.style.backgroundColor = "lightgreen";
   } else {
     resultElement.textContent = "Incorrect!";
+    increectElement.textContent = `The correct answer was: ${correctAnswer}`;
+    background.style.backgroundColor = "lightcoral";
+
   }
   questionCount++;
   updateProgress();
   updateScore();
   nextButton.disabled = false;
-  nextQuestion();
 }
 
 function updateProgress() {
   progressElement.textContent = `Progress: ${questionCount} / ${totalPokemonCount}`;
-  
+  nextQuestion();
 }
 
 async function nextQuestion() {
